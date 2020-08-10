@@ -3,7 +3,7 @@
 namespace Henrywhitaker3\Healthchecks;
 
 use Henrywhitaker3\Healthchecks\Exceptions\HealthchecksAccountLimitReachedException;
-use Henrywhitaker3\Healthchecks\Exceptions\HealthChecksFailureException;
+use Henrywhitaker3\Healthchecks\Exceptions\HealthchecksFailureException;
 use Henrywhitaker3\Healthchecks\Exceptions\HealthchecksForbiddenException;
 use Henrywhitaker3\Healthchecks\Exceptions\HealthchecksUnauthorisedException;
 use Henrywhitaker3\Healthchecks\Exceptions\HealthchecksUuidNotFoundException;
@@ -49,7 +49,7 @@ class HealthchecksManager
         $this->url = $url;
         $this->apikey = $apikey;
         $this->headers = [
-            "X-Api-Key: $apikey"
+            "X-Api-Key: $apikey",
         ];
         $this->validate();
     }
@@ -83,10 +83,10 @@ class HealthchecksManager
 
         if($response['status'] !== 200) {
             if($response['status'] == 401) {
-                throw new HealthchecksUnauthorisedException();
+                throw new HealthchecksUnauthorisedException($response['body']);
             }
 
-            throw new HealthChecksFailureException();
+            throw new HealthchecksFailureException($response['body']);
         }
 
         return json_decode($response['body'], true)['checks'];
@@ -110,6 +110,146 @@ class HealthchecksManager
 
         if($response['status'] !== 200) {
             if($response['status'] == 401) {
+                throw new HealthchecksUnauthorisedException($response['body']);
+            }
+
+            if($response['status'] == 403) {
+                throw new HealthchecksForbiddenException($response['body']);
+            }
+
+            if($response['status'] == 404) {
+                throw new HealthchecksUuidNotFoundException($response['body']);
+            }
+
+            throw new HealthchecksFailureException($response['body']);
+        }
+
+        return json_decode($response['body'], true);
+    }
+
+    /**
+     * Pause a specific check
+     *
+     * @param String $uuid The UUID of the endpoint
+     * @return bool
+     */
+    public function pauseCheck(String $uuid)
+    {
+        if(Uuid::isValid($uuid) !== true) {
+            throw new InvalidUuidStringException();
+        }
+
+        $url = "$this->url/checks/$uuid/pause";
+
+        $response = HttpClient::post($url, $this->headers);
+
+        if($response['status'] !== 200) {
+            if($response['status'] == 401) {
+                throw new HealthchecksUnauthorisedException($response['body']);
+            }
+
+            if($response['status'] == 403) {
+                throw new HealthchecksForbiddenException($response['body']);
+            }
+
+            if($response['status'] == 404) {
+                throw new HealthchecksUuidNotFoundException($response['body']);
+            }
+
+            throw new HealthchecksFailureException($response['body']);
+        }
+
+        return true;
+    }
+
+    /**
+     * Resume a check (just pings the check)
+     *
+     * @param String $uuid The UUID of the endpoint
+     * @return bool
+     */
+    public function resumeCheck(String $uuid)
+    {
+        if(Uuid::isValid($uuid) !== true) {
+            throw new InvalidUuidStringException();
+        }
+
+        $url = "https://hc-ping.com/$uuid";
+
+        $response = HttpClient::get($url, $this->headers);
+
+        if($response['status'] !== 200) {
+            if($response['status'] == 401) {
+                throw new HealthchecksUnauthorisedException($response['body']);
+            }
+
+            if($response['status'] == 403) {
+                throw new HealthchecksForbiddenException($response['body']);
+            }
+
+            if($response['status'] == 404) {
+                throw new HealthchecksUuidNotFoundException($response['body']);
+            }
+
+            throw new HealthchecksFailureException($response['body']);
+        }
+
+        return true;
+    }
+
+    /**
+     * Delete a check
+     *
+     * @param String $uuid The UUID of the endpoint
+     * @return bool
+     */
+    public function deleteCheck(String $uuid)
+    {
+        if(Uuid::isValid($uuid) !== true) {
+            throw new InvalidUuidStringException();
+        }
+
+        $url = "$this->url/checks/$uuid";
+
+        $response = HttpClient::delete($url, $this->headers);
+
+        if($response['status'] !== 200) {
+            if($response['status'] == 401) {
+                throw new HealthchecksUnauthorisedException($response['body']);
+            }
+
+            if($response['status'] == 403) {
+                throw new HealthchecksForbiddenException($response['body']);
+            }
+
+            if($response['status'] == 404) {
+                throw new HealthchecksUuidNotFoundException($response['body']);
+            }
+
+            throw new HealthchecksFailureException($response['body']);
+        }
+
+        return true;
+    }
+
+    /**
+     * Get a specific check's pings
+     *
+     * @param String $uuid The UUID of the endpoint
+     * @return array
+     */
+    public function getCheckPings(String $uuid)
+    {
+        if(Uuid::isValid($uuid) !== true) {
+            throw new InvalidUuidStringException();
+        }
+
+        $url = "$this->url/checks/$uuid/pings";
+
+        $response = HttpClient::get($url, $this->headers);
+
+        if($response['status'] !== 200) {
+            if($response['status'] == 401) {
                 throw new HealthchecksUnauthorisedException();
             }
 
@@ -121,7 +261,46 @@ class HealthchecksManager
                 throw new HealthchecksUuidNotFoundException();
             }
 
-            throw new HealthChecksFailureException();
+            throw new HealthchecksFailureException();
+        }
+
+        return json_decode($response['body'], true);
+    }
+
+    /**
+     * Get a specific check's status changes
+     *
+     * @param String $uuid The UUID of the endpoint
+     * @return void
+     */
+    public function getCheckStatusChanges(String $uuid)
+    {
+        if(Uuid::isValid($uuid) !== true) {
+            throw new InvalidUuidStringException();
+        }
+
+        $url = "$this->url/checks/$uuid/flips";
+
+        $response = HttpClient::get($url, $this->headers);
+
+        if($response['status'] !== 200) {
+            if($response['status'] == 401) {
+                throw new HealthchecksFailureException($response['body']);
+            }
+
+            if($response['status'] == 401) {
+                throw new HealthchecksUnauthorisedException($response['body']);
+            }
+
+            if($response['status'] == 403) {
+                throw new HealthchecksForbiddenException($response['body']);
+            }
+
+            if($response['status'] == 404) {
+                throw new HealthchecksUuidNotFoundException($response['body']);
+            }
+
+            throw new HealthchecksFailureException($response['body']);
         }
 
         return json_decode($response['body'], true);
@@ -149,7 +328,7 @@ class HealthchecksManager
      *      'channels'      => (string) Comma-separated list of integration identifiers. Optional.
      *                                  Default = null.
      *    ]
-     * @return bool
+     * @return array
      */
     public function createCheck(array $args = [])
     {
@@ -211,7 +390,104 @@ class HealthchecksManager
             }
         }
 
-        return true;
+        return json_decode($response['body'], true);
+    }
+
+    /**
+     * Update a specific check
+     *
+     * @param String $uuid The UUID of the endpoint
+     * @return array
+     */
+    public function updateCheck(String $uuid, array $args)
+    {
+        if(Uuid::isValid($uuid) !== true) {
+            throw new InvalidUuidStringException();
+        }
+
+        if(!is_array($args)) {
+            throw new InvalidArgumentException();
+        }
+
+        $rules = [
+            'name' => 'string',
+            'tags' => 'string',
+            'desc' => 'string',
+            'timeout' => 'int',
+            'grace' => 'int',
+            'schedule' => 'string',
+            'tz' => 'string',
+            'channels' => 'string',
+        ];
+
+        if(!$this->validator($args, $rules)) {
+            throw new InvalidArgumentException();
+        }
+
+        $currentData = $this->getCheck($uuid);
+
+        foreach($args as $key => $val) {
+            $currentData[$key] = $val;
+        }
+
+        foreach($currentData as $key => $val) {
+            if(!array_key_exists($key, $rules)) {
+                unset($currentData[$key]);
+            }
+        }
+
+        if(!isset($args['schedule']) && isset($args['timeout'])) {
+            unset($currentData['schedule']);
+        }
+
+        $url = "$this->url/checks/$uuid";
+
+        $response = HttpClient::post($url, $this->headers, $currentData);
+
+        if($response['status'] !== 201 || $response['status'] !== 200) {
+            if($response['status'] == 401) {
+                throw new HealthchecksUnauthorisedException($response['body']);
+            }
+
+            if($response['status'] == 400) {
+                throw new InvalidArgumentException($response['body']);
+            }
+
+            if($response['status'] == 403) {
+                throw new HealthchecksAccountLimitReachedException($response['body']);
+            }
+
+            if($response['status'] == 404) {
+                throw new HealthchecksUuidNotFoundException($response['body']);
+            }
+
+            throw new HealthchecksFailureException($response['body']);
+        }
+
+        return json_decode($response['body'], true);
+    }
+
+    /**
+     * Get a list of intergations
+     *
+     * @return array
+     */
+    public function integrations()
+    {
+
+        $url = "$this->url/channels";
+
+        $response = HttpClient::get($url, $this->headers);
+
+        if($response['status'] !== 200) {
+            if($response['status'] == 401) {
+                throw new HealthchecksUnauthorisedException($response['body']);
+            }
+
+            throw new HealthchecksFailureException($response['body']);
+        }
+
+        return json_decode($response['body'], true);
     }
 
     /**

@@ -64,4 +64,34 @@ class HttpClient
 			'status' => $status,
 		];
     }
+
+    /**
+     * Perform a DELETE request against a specific URL
+     *
+     * @param String $url
+     * @param array $headers Optional extra headers to send with request
+     * @return array
+     */
+    public static function delete(String $url, array $headers = [])
+    {
+        $curl = curl_init();
+		$curlConfig = [
+			CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_CUSTOMREQUEST => 'DELETE'
+		];
+		curl_setopt_array($curl, $curlConfig);
+
+		$response = curl_exec($curl);
+		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+		curl_close($curl);
+
+		return [
+			'body' => $response,
+			'status' => $status,
+		];
+    }
 }
