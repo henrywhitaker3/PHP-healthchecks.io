@@ -2,7 +2,7 @@
 
 namespace Henrywhitaker3\Healthchecks;
 
-use Henrywhitaker3\Healthchecks\Exceptions\HealthChecksFailureException;
+use Henrywhitaker3\Healthchecks\Exceptions\HealthchecksFailureException;
 use Henrywhitaker3\Healthchecks\Exceptions\HealthchecksUuidNotFoundException;
 use Henrywhitaker3\Healthchecks\Exceptions\InvalidUrlException;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
@@ -74,7 +74,7 @@ class Healthchecks
                 throw new HealthchecksUuidNotFoundException();
             }
 
-            throw new HealthChecksFailureException();
+            throw new HealthchecksFailureException();
         }
 
         return true;
@@ -96,7 +96,7 @@ class Healthchecks
                 throw new HealthchecksUuidNotFoundException();
             }
 
-            throw new HealthChecksFailureException();
+            throw new HealthchecksFailureException();
         }
 
         return true;
@@ -118,7 +118,7 @@ class Healthchecks
                 throw new HealthchecksUuidNotFoundException();
             }
 
-            throw new HealthChecksFailureException();
+            throw new HealthchecksFailureException();
         }
 
         return true;

@@ -13,6 +13,12 @@ class IntValidationRule extends Rule
         //
     }
 
+    /**
+     * Check the value is an int
+     *
+     * @param mixed $value
+     * @return bool
+     */
     public function check($value): bool
     {
         if(is_int($value)) {

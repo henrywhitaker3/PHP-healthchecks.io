@@ -13,6 +13,12 @@ class StringValidationRule extends Rule
         //
     }
 
+    /**
+     * Check the value is a string
+     *
+     * @param mixed $value
+     * @return bool
+     */
     public function check($value): bool
     {
         if(is_string($value)) {

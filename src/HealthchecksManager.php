@@ -271,7 +271,7 @@ class HealthchecksManager
      * Get a specific check's status changes
      *
      * @param String $uuid The UUID of the endpoint
-     * @return void
+     * @return array
      */
     public function getCheckStatusChanges(String $uuid)
     {
@@ -285,7 +285,7 @@ class HealthchecksManager
 
         if($response['status'] !== 200) {
             if($response['status'] == 401) {
-                throw new HealthchecksFailureException($response['body']);
+                throw new HealthchecksUnauthorisedException($response['body']);
             }
 
             if($response['status'] == 401) {
@@ -376,7 +376,7 @@ class HealthchecksManager
 
         $response = HttpClient::post($url, $this->headers, $params);
 
-        if($response['status'] !== 201 || $response['status'] !== 200) {
+        if($response['status'] !== 201 && $response['status'] !== 200) {
             if($response['status'] == 401) {
                 throw new HealthchecksUnauthorisedException();
             }
@@ -444,7 +444,7 @@ class HealthchecksManager
 
         $response = HttpClient::post($url, $this->headers, $currentData);
 
-        if($response['status'] !== 201 || $response['status'] !== 200) {
+        if($response['status'] !== 201 && $response['status'] !== 200) {
             if($response['status'] == 401) {
                 throw new HealthchecksUnauthorisedException($response['body']);
             }
