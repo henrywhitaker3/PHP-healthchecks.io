@@ -6,23 +6,30 @@
     ],
     "homepage": "https://github.com/henrywhitaker3/PHP-healthchecks.io",
     "type": "library",
+    "require": {
+        "php": ">=7.2.5",
+        "ramsey/uuid": "^4.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5",
+        "vlucas/phpdotenv": "^5.1"
+    },
     "license": "MIT",
     "authors": [
         {
             "name": "Henry Whitaker",
             "email": "henrywhitaker3@outlook.com",
-	    "homepage": "https://github.com/henrywhitaker3"
+            "homepage": "https://github.com/henrywhitaker3"
         }
     ],
-    "require": {
-    	"php": "^7.2.5"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8.5"
-    },
     "autoload": {
         "psr-4": {
-            "Healthchecks\\": "src"
+            "Henrywhitaker3\\Healthchecks\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Henrywhitaker3\\Healthchecks\\Tests\\": "tests/"
         }
     }
 }
