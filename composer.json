@@ -1,13 +1,28 @@
 {
     "name": "henry/php-healthchecks.io",
     "description": "A simple PHP healthchecks.io library",
+    "keywords": [
+    	"healthchecks", "healthchecks.io", "wrapper", "api"
+    ],
+    "homepage": "https://github.com/henrywhitaker3/PHP-healthchecks.io",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Henry Whitaker",
-            "email": "henrywhitaker3@outlook.com"
+            "email": "henrywhitaker3@outlook.com",
+	    "homepage": "https://github.com/henrywhitaker3"
         }
     ],
-    "require": {}
+    "require": {
+    	"php": "^7.2.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Healthchecks\\": "src"
+        }
+    }
 }
