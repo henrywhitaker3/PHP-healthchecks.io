@@ -1,0 +1,13 @@
+{
+    "name": "henry/php-healthchecks.io",
+    "description": "A simple PHP healthchecks.io library",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Henry Whitaker",
+            "email": "henrywhitaker3@outlook.com"
+        }
+    ],
+    "require": {}
+}
