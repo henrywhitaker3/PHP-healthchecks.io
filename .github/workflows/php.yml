@@ -30,9 +30,11 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
 
+    - name: Create env file
+      run: |
+        touch .env
+        echo APIKEY=${{ secrets.APIKEY }} >> .env
+        echo UUID=${{ secrets.UUID }} >> .env
+
     - name: Run test suite
       run: vendor/bin/phpunit
-      env:
-        CI: true
-        APIKEY: ${{ secrets.APIKEY }}
-        UUID: ${{ secrets.UUID }}
