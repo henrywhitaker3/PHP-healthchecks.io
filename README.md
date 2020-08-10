@@ -48,7 +48,7 @@ $hm->getCheckPings('UUID'); // gets a list of pings for the check
 $hm->getCheckStatusChanges('UUID'); // returns a list of "flips" this check has experienced
 $hm->createCheck($args); // create a new check
 $hm->createCheck($args); // create a new check
-$hm->integrations($args); // get a list of integrations (i.e. slack, discord etc.)
+$hm->integrations(); // get a list of integrations (i.e. slack, discord etc.)
 ```
 
 ## Contributing
