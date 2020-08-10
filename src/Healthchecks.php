@@ -49,7 +49,7 @@ class Healthchecks
             $this->url = $this->url . '/';
 		}
 		
-		if (filter_var($this->url, FILTER_VALIDATE_URL) == false) {
+		if(filter_var($this->url, FILTER_VALIDATE_URL) == false) {
 			throw new InvalidUrlException();
 		}
 
@@ -67,7 +67,7 @@ class Healthchecks
     {
 		$url = $this->url . $this->uuid;
 
-		$resp = $this->get($url);
+		$resp = HttpClient::get($url);
 		
         if($resp['status'] !== 200) {
             if($resp['status'] == 404) {
@@ -89,7 +89,7 @@ class Healthchecks
     {
 		$url = $this->url . $this->uuid . '/fail';
 
-		$resp = $this->get($url);
+		$resp = HttpClient::get($url);
 		
         if($resp['status'] !== 200) {
             if($resp['status'] == 404) {
@@ -111,7 +111,7 @@ class Healthchecks
     {
 		$url = $this->url . $this->uuid . '/start';
 
-		$resp = $this->get($url);
+		$resp = HttpClient::get($url);
 		
         if($resp['status'] !== 200) {
             if($resp['status'] == 404) {
@@ -122,31 +122,5 @@ class Healthchecks
         }
 
         return true;
-	}
-	
-	/**
-	 * Simple GET cURL command
-	 *
-	 * @param String $url
-	 * @return array
-	 */
-	public function get(String $url)
-	{
-		$curl = curl_init();
-		$curlConfig = [
-			CURLOPT_URL => $url,
-			CURLOPT_RETURNTRANSFER => true,
-		];
-		curl_setopt_array($curl, $curlConfig);
-
-		$response = curl_exec($curl);
-		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-		curl_close($curl);
-
-		return [
-			'body' => $response,
-			'status' => $status,
-		];
 	}
 }
