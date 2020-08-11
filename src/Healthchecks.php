@@ -37,7 +37,7 @@ class Healthchecks
 
         $this->validate();
 	}
-	
+
 	/**
      * Validate the args supplied in the constructor
      *
@@ -48,7 +48,7 @@ class Healthchecks
         if(substr($this->url, -1) != '/') {
             $this->url = $this->url . '/';
 		}
-		
+
 		if(filter_var($this->url, FILTER_VALIDATE_URL) == false) {
 			throw new InvalidUrlException();
 		}
@@ -56,8 +56,8 @@ class Healthchecks
         if(Uuid::isValid($this->uuid) !== true) {
             throw new InvalidUuidStringException();
         }
-	}
-	
+    }
+
 	/**
      * Send a 'success' signal
      *
@@ -68,7 +68,7 @@ class Healthchecks
 		$url = $this->url . $this->uuid;
 
 		$resp = HttpClient::get($url);
-		
+
         if($resp['status'] !== 200) {
             if($resp['status'] == 404) {
                 throw new HealthchecksUuidNotFoundException();
@@ -79,7 +79,7 @@ class Healthchecks
 
         return true;
 	}
-	
+
 	/**
      * Send a 'fail' signal
      *
@@ -90,7 +90,7 @@ class Healthchecks
 		$url = $this->url . $this->uuid . '/fail';
 
 		$resp = HttpClient::get($url);
-		
+
         if($resp['status'] !== 200) {
             if($resp['status'] == 404) {
                 throw new HealthchecksUuidNotFoundException();
@@ -112,7 +112,7 @@ class Healthchecks
 		$url = $this->url . $this->uuid . '/start';
 
 		$resp = HttpClient::get($url);
-		
+
         if($resp['status'] !== 200) {
             if($resp['status'] == 404) {
                 throw new HealthchecksUuidNotFoundException();
