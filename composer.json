@@ -1,5 +1,5 @@
 {
-    "name": "henrywhitaker3/php-healthchecks.io",
+    "name": "henrywhitaker3/healthchecks-io",
     "description": "A simple PHP healthchecks.io wrapper",
     "keywords": [
     	"healthchecks", "healthchecks.io", "wrapper", "api"
