@@ -1,5 +1,7 @@
 # PHP-healthchecks.io
 
+![version](https://img.shields.io/badge/version-v1.0.0-success?style=flat-square) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/henrywhitaker3/PHP-healthchecks.io/PHPUnit?label=build&logo=github&style=flat-square)](https://github.com/henrywhitaker3/PHP-healthchecks.io/actions) [![last_commit](https://img.shields.io/github/last-commit/henrywhitaker3/PHP-healthchecks.io?style=flat-square)](https://github.com/henrywhitaker3/PHP-healthchecks.io/commits) [![issues](https://img.shields.io/github/issues/henrywhitaker3/PHP-healthchecks.io?style=flat-square)](https://github.com/henrywhitaker3/PHP-healthchecks.io/issues) [![commit_freq](https://img.shields.io/github/commit-activity/m/henrywhitaker3/PHP-healthchecks.io?style=flat-square)](https://github.com/henrywhitaker3/PHP-healthchecks.io/commits) [![license](https://img.shields.io/github/license/henrywhitaker3/PHP-healthchecks.io?style=flat-square)](https://github.com/henrywhitaker3/PHP-healthchecks.io/blob/master/LICENSE)
+
 This package provides simple methods to interact with the [healthchecks.io](https://healthchecks.io) API.
 
 ## Installation
