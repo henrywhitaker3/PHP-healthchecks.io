@@ -5,6 +5,13 @@ namespace Henrywhitaker3\Healthchecks;
 class HttpClient
 {
     /**
+     * User-agent stirng
+     *
+     * @var String
+     */
+    static $userAgent = 'PHP-healthchecks.io/1.0';
+
+    /**
      * Perform a GET request against a specific URL
      *
      * @param String $url
@@ -18,6 +25,7 @@ class HttpClient
 			CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_USERAGENT => HttpClient::$userAgent,
             CURLOPT_HTTPHEADER => $headers,
 		];
 		curl_setopt_array($curl, $curlConfig);
@@ -49,6 +57,7 @@ class HttpClient
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_USERAGENT => HttpClient::$userAgent,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => json_encode($data)
 		];
@@ -80,6 +89,7 @@ class HttpClient
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_USERAGENT => HttpClient::$userAgent,
             CURLOPT_CUSTOMREQUEST => 'DELETE'
 		];
 		curl_setopt_array($curl, $curlConfig);
