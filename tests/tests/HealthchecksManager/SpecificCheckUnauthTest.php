@@ -45,6 +45,23 @@ class SpecificCheckUnauthTest extends Test
     }
 
     /**
+     * Tests getting specific check from API
+     *
+     * @return void
+     */
+    public function testGetCheckUnauth()
+    {
+        try {
+            $this->hmUnauth->getCheck($this->uuid);
+        } catch(HealthchecksUnauthorisedException $e) {
+            $this->assertTrue(true);
+            return true;
+        }
+
+        $this->assertTrue(false);
+    }
+
+    /**
      * Test pausing a check
      *
      * @return void
