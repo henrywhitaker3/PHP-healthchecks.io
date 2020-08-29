@@ -60,16 +60,16 @@
         },
         {
             "name": "rakit/validation",
-            "version": "v1.3.2",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rakit/validation.git",
-                "reference": "126306ccabeadec24b6fa310605c71be67dee188"
+                "reference": "ff003a35cdf5030a5f2482299f4c93f344a35b29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rakit/validation/zipball/126306ccabeadec24b6fa310605c71be67dee188",
-                "reference": "126306ccabeadec24b6fa310605c71be67dee188",
+                "url": "https://api.github.com/repos/rakit/validation/zipball/ff003a35cdf5030a5f2482299f4c93f344a35b29",
+                "reference": "ff003a35cdf5030a5f2482299f4c93f344a35b29",
                 "shasum": ""
             },
             "require": {
@@ -98,7 +98,7 @@
                 }
             ],
             "description": "PHP Laravel like standalone validation library",
-            "time": "2020-08-09T01:18:04+00:00"
+            "time": "2020-08-27T05:07:01+00:00"
         },
         {
             "name": "ramsey/collection",
