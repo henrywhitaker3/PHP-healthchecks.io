@@ -61,10 +61,10 @@ class HealthchecksManager
      */
     public function validate()
     {
-        if(substr($this->url, -1) != '/') {
-            $this->url = $this->url . '/';
+        if(substr($this->url, -1) === '/') {
+            $this->url = substr($this->url, 0, -1);
 		}
-		
+
 		if(filter_var($this->url, FILTER_VALIDATE_URL) == false) {
 			throw new InvalidUrlException();
 		}
@@ -311,11 +311,11 @@ class HealthchecksManager
      *
      * @param array $args Array with optional parameters
      *   $params = [
-     *      'name'         => (string) Name for check. Optional. 
+     *      'name'         => (string) Name for check. Optional.
      *                                   Default = ''.
-     *      'tags'         => (string) Space-separated list of tags. Optional. 
+     *      'tags'         => (string) Space-separated list of tags. Optional.
      *                                   Default = ''.
-     *      'desc'         => (string) Short description of check. Optional. 
+     *      'desc'         => (string) Short description of check. Optional.
      *                                   Default = null.
      *      'timeout'      => (int) Expected time between pings in seconds. Optional.
      *                                Default = 86400.
